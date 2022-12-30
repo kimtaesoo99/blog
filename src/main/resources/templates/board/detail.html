@@ -1,0 +1,97 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <div th:replace="/layout/header.html :: fragment-header"></div>
+</head>
+
+<sec:authorize access="isAuthenticated()">
+  <sec:authentication property="principal" var="principal"/>
+</sec:authorize>
+
+<body>
+<div th:replace="/layout/nav.html :: fragment-nav"></div>
+
+
+<div class="container">
+
+  <div th:if="${board.getUser().username == #authentication.name}">
+    <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
+    <a th:href="@{/board/{id}/updateForm(id=${board.id})}" class="btn btn-primary">수정</a>
+    <button id="btn-delete" class="btn btn-danger">삭제</button>
+    <br/><br/>
+  </div>
+
+  <div th:unless="${board.getUser().username == #authentication.name}">
+    <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
+    <br/><br/>
+  </div>
+
+
+  <div>
+
+    작성자 : <span><i th:text="${board.getUser().getUsername()}"></i></span><br>
+    작성날짜 : <span th:text="${board.getCreateDate()}"></span>
+    글번호 : <span th:id="id"><i th:text="${board.id}"></i></span><br>
+    조회수 : <span th:text="${board.count}"></span><br>
+  </div>
+  <br/>
+
+
+  <div class="form-group">
+    <h3 th:text="${board.title}"></h3>
+  </div>
+  <hr>
+
+
+  <!--   th:utext 를 사용해야 DB안에 html태그까지 모두 적용함    -->
+  <div class="form-group">
+    <div th:utext="${board.content}"></div>
+  </div>
+  <hr>
+
+
+  <!--    댓글      -->
+  <div class="card">
+    <form>
+
+      <input type="hidden" id="boardId" th:value="${board.id}">
+      <div class="card-body">
+        <textarea id="reply-content" class="form-control" rows="1"></textarea>
+      </div>
+      <div class="card-footer">
+        <button type="button" id="btn-reply-save" class="btn btn-primary">등록</button>
+      </div>
+
+    </form>
+
+  </div>
+  <br>
+
+
+  <div class="card">
+    <div class="card-header">댓글 리스트</div>
+    <ul th:each="reply : ${board.replys}" id="reply-box" class="list-group">
+      <li th:id="|reply-${reply.id}|" class="list-group-item">
+
+        <div th:if="${reply.user.username == #authentication.name}" class="d-flex ">
+          <div th:text="|작성자 : ${reply.user.username} &nbsp|" class="font-italic">작성자 : taesoo &nbsp;</div>
+          <button th:onclick="|javascript:index.replyDelete(${board.id}, ${reply.id})|" class="badge">삭제
+          </button>
+        </div>
+        <div th:unless="${reply.user.username == #authentication.name}" class="d-flex ">
+          <div th:text="|작성자 : ${reply.user.username} &nbsp|" class="font-italic">작성자 : taesoo &nbsp;</div>
+        </div>
+
+
+        <div th:text="${reply.content}">댓글 내용</div>
+
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/js/board.js"></script>
+<footer th:replace="/layout/footer.html :: fragment-footer"></footer>
+</body>
+</html>
