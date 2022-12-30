@@ -17,7 +17,7 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
-    // Json 데이터를 받으려면 @RequestBo가dy로 받아야함
+    // Json 데이터를 받으려면 @RequestBody로 받아야함
     // 회원가입
     @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(@RequestBody User user) {
