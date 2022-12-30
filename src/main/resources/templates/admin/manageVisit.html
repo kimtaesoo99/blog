@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <div th:replace="/layout/header.html :: fragment-header"></div>
+</head>
+
+
+<body>
+<div th:replace="/layout/nav.html :: fragment-nav"></div>
+
+
+<div class="container">
+  <h1>방문 통계 페이지</h1>
+  <hr/>
+
+  <div class="card m-2">
+    <div class="card-body">
+      <h4 class="card-title">전체 회원수</h4>
+      <strong th:text="|전체 회원수 : ${totalUserCount}명|">30명</strong><br/><br/>
+      <a href="#" class="btn btn-primary">상세보기</a>
+    </div>
+  </div>
+
+  <div class="card m-2">
+    <div class="card-body">
+      <h4 class="card-title">전체 조회수</h4>
+      <strong th:text="|전체 조회수 : ${totalVisitCount}회|">500회</strong><br/><br/>
+      <a href="#" class="btn btn-primary">상세보기</a>
+    </div>
+  </div>
+
+</div>
+
+
+<footer th:replace="/layout/footer.html :: fragment-footer"></footer>
+
+</body>
+</html>
