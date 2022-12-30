@@ -21,7 +21,6 @@ public class UserApiController {
     // 회원가입
     @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(@RequestBody User user) {
-        user.setRole(ROLETYPE.USER);
         userService.save(user);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
         // 자바 오브젝트를 JSON으로 변환하여 전송 (JACKSON)
