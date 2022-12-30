@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <div th:replace="/layout/header.html :: fragment-header"></div>
+</head>
+
+
+<body>
+<div th:replace="/layout/nav.html :: fragment-nav"></div>
+
+
+<div class="container">
+
+  <div>
+    <h1 th:text="|${user.getUsername()} 님 등급 수정하기|">xxx님 등급 수정하기</h1>
+    <br>
+
+    <form>
+      <input type="hidden" id="id" th:value="${user.id}">
+
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" th:value="USER" class="radio-value form-check-input" name="optradio" checked>USER
+        </label>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" th:value="ADMIN" class="radio-value form-check-input" name="optradio">ADMIN
+        </label>
+      </div>
+
+    </form>
+    <button id="btn-update" class="btn btn-primary">등급 수정 완료</button>
+  </div>
+  <hr/>
+
+
+
+
+  <h1 th:text="|${user.getUsername()} 님 등급 수정하기|">xxx님의 작성글</h1>
+  <br>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">조회수</th>
+      <th scope="col">작성일자</th>
+      <th scope="col">상세보기</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="board, i : ${boards}">
+      <th scope="row" th:text="${i.count}">1</th>
+      <td th:text="${board.getTitle()}">제목입니다.</td>
+      <td th:text="${board.getCount()}">30명</td>
+      <td th:text="${board.getCreateDate()}">2022-01-03</td>
+      <td><a th:href="@{/board/{id}(id=${board.getId()})}">링크</a></td>
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>
+
+
+<footer th:replace="/layout/footer.html :: fragment-footer"></footer>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>
