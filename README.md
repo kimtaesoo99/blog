@@ -12,7 +12,7 @@
 
 - Spring boot
 - Thymeleaf
-- MariaDB
+- MYSQL
 - Lombok
 - Spring Security
 - Spring web
